@@ -106,7 +106,8 @@ export async function removeOne({ entity_id }) {
   return { success: true, entity_id: result?.entity_id, removed: result?.removed, remaining_shapes: result?.remaining_shapes };
 }
 
-export async function clearAll() {
+export async function clearAll({ _deps } = {}) {
+  const { evaluate, getChartApi } = _resolve(_deps);
   const apiPath = await getChartApi();
   await evaluate(`${apiPath}.removeAllShapes()`);
   return { success: true, action: 'all_shapes_removed' };
